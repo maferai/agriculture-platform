@@ -41,7 +41,7 @@ def detect_sudden_drop(ndvi_values, threshold=0.05):
 # Main execution
 def main():
     # Load sample NDVI data
-    data = pd.read_csv("../data/sample_vegetation.csv")
+    data = pd.read_csv("data/sample_vegetation.csv")
 
     # Compute metrics
     status = get_crop_status(data["ndvi"])
