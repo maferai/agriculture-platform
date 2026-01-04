@@ -28,15 +28,19 @@ def get_ndvi_trend(ndvi_values):
     else:
         return "stable"
 # Load sample NDVI data
-data = pd.read_csv("../data/sample_vegetation.csv")
+def main():
+    data = pd.read_csv("../data/sample_vegetation.csv")
 
-status = get_crop_status(data["ndvi"])
-trend = get_ndvi_trend(data["ndvi"])
+    status = get_crop_status(data["ndvi"])
+    trend = get_ndvi_trend(data["ndvi"])
 
-average_ndvi = data["ndvi"].mean()
-current_ndvi = data["ndvi"].iloc[-1]
+    average_ndvi = data["ndvi"].mean()
+    current_ndvi = data["ndvi"].iloc[-1]
 
-print("Average NDVI:", round(average_ndvi, 3))
-print("Current NDVI:", round(current_ndvi, 3))
-print("Crop status:", status)
-print("Vegetation trend:", trend)
+    print("Average NDVI:", round(average_ndvi, 3))
+    print("Current NDVI:", round(current_ndvi, 3))
+    print("Crop status:", status)
+    print("Vegetation trend:", trend)
+
+if __name__ == "__main__":
+    main()
