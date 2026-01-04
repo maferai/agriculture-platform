@@ -16,7 +16,7 @@ def get_crop_status(ndvi_values):
     else:
         return "critical"
 
-# NEW: detect NDVI trend
+# Detect NDVI trend
 def get_ndvi_trend(ndvi_values):
     start = ndvi_values.iloc[0]
     end = ndvi_values.iloc[-1]
@@ -27,20 +27,37 @@ def get_ndvi_trend(ndvi_values):
         return "declining"
     else:
         return "stable"
-# Load sample NDVI data
+
+# Detect sudden NDVI drop between the last two data points
+def detect_sudden_drop(ndvi_values, threshold=0.05):
+    """
+    Returns True if the NDVI dropped by `threshold` or more since last measurement
+    """
+    if len(ndvi_values) < 2:
+        return False
+
+    return (ndvi_values.iloc[-2] - ndvi_values.iloc[-1]) >= threshold
+
+# Main execution
 def main():
+    # Load sample NDVI data
     data = pd.read_csv("../data/sample_vegetation.csv")
 
+    # Compute metrics
     status = get_crop_status(data["ndvi"])
     trend = get_ndvi_trend(data["ndvi"])
+    alert = detect_sudden_drop(data["ndvi"])
 
     average_ndvi = data["ndvi"].mean()
     current_ndvi = data["ndvi"].iloc[-1]
 
+    # Output results
     print("Average NDVI:", round(average_ndvi, 3))
     print("Current NDVI:", round(current_ndvi, 3))
     print("Crop status:", status)
     print("Vegetation trend:", trend)
+    if alert:
+        print("Warning: Sudden NDVI drop detected")
 
 if __name__ == "__main__":
     main()
