@@ -10,11 +10,11 @@ def get_crop_status(ndvi_values):
     current_ndvi = ndvi_values.iloc[-1]
 
     if current_ndvi >= HEALTHY_THRESHOLD * average_ndvi:
-        return "healthy"
+        return "saludable"
     elif current_ndvi >= STRESSED_THRESHOLD * average_ndvi:
-        return "stressed"
+        return "estresado"
     else:
-        return "critical"
+        return "crítico"
 
 # Detect NDVI trend
 def get_ndvi_trend(ndvi_values):
@@ -22,11 +22,11 @@ def get_ndvi_trend(ndvi_values):
     end = ndvi_values.iloc[-1]
 
     if end > start:
-        return "improving"
+        return "mejorando"
     elif end < start:
-        return "declining"
+        return "declinando"
     else:
-        return "stable"
+        return "estable"
 
 # Detect sudden NDVI drop between the last two data points
 def detect_sudden_drop(ndvi_values, threshold=0.05):
@@ -52,12 +52,12 @@ def main():
     current_ndvi = data["ndvi"].iloc[-1]
 
     # Output results
-    print("Average NDVI:", round(average_ndvi, 3))
-    print("Current NDVI:", round(current_ndvi, 3))
-    print("Crop status:", status)
-    print("Vegetation trend:", trend)
+    print("NDVI promedio:", round(average_ndvi, 3))
+    print("NDVI actual:", round(current_ndvi, 3))
+    print("Estado del cultivo:", status)
+    print("Tendencia de la vegetación:", trend)
     if alert:
-        print("Warning: Sudden NDVI drop detected")
+        print("¡Alerta: caída súbita de NDVI detectada!")
 
 if __name__ == "__main__":
     main()
