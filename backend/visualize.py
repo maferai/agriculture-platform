@@ -17,12 +17,13 @@ plt.plot(data["date"], data["ndvi"], label="NDVI", color="green")
 
 # Highlight critical or sudden-drop weeks
 for i, (status, alert) in enumerate(zip(statuses, alerts)):
-    if status == "critical" or alert:
-        plt.scatter(data["date"].iloc[i], data["ndvi"].iloc[i], color="red", s=50, label="Critical / Alert" if i==0 else "")
+    if status == "crítico" or alert:
+        plt.scatter(data["date"].iloc[i], data["ndvi"].iloc[i], 
+                    color="red", s=50, label="Crítico / Alerta" if i==0 else "")
 
-plt.xlabel("Date")
+plt.xlabel("Fecha")
 plt.ylabel("NDVI")
-plt.title("Crop Vegetation Health Over Time")
+plt.title("Salud de la vegetación del cultivo a lo largo del tiempo")
 plt.legend()
 plt.xticks(rotation=45)
 plt.tight_layout()
