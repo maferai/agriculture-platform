@@ -16,10 +16,23 @@ def get_crop_status(ndvi_values):
     else:
         return "critical"
 
+# NEW: detect NDVI trend
+def get_ndvi_trend(ndvi_values):
+    start = ndvi_values.iloc[0]
+    end = ndvi_values.iloc[-1]
+
+    if end > start:
+        return "improving"
+    elif end < start:
+        return "declining"
+    else:
+        return "stable"
+
 # Load sample NDVI data
 data = pd.read_csv("../data/sample_vegetation.csv")
 
-# Classify crop health
 status = get_crop_status(data["ndvi"])
+trend = get_ndvi_trend(data["ndvi"])
 
 print("Crop status:", status)
+print("Vegetation trend:", trend)
