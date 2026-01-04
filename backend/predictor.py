@@ -1,26 +1,25 @@
 import pandas as pd
 
-# This function determines crop health using NDVI values over time
-def get_crop_status(ndvi_values):
-    # Calculate the average NDVI as a baseline reference
-    average_ndvi = ndvi_values.mean()
+# Thresholds for crop health classification
+HEALTHY_THRESHOLD = 0.95
+STRESSED_THRESHOLD = 0.85
 
-    # Get the most recent NDVI value (current condition)
+# Determine crop health using NDVI values over time
+def get_crop_status(ndvi_values):
+    average_ndvi = ndvi_values.mean()
     current_ndvi = ndvi_values.iloc[-1]
 
-    # Compare current NDVI against the baseline
-    if current_ndvi >= 0.95 * average_ndvi:
+    if current_ndvi >= HEALTHY_THRESHOLD * average_ndvi:
         return "healthy"
-    elif current_ndvi >= 0.85 * average_ndvi:
+    elif current_ndvi >= STRESSED_THRESHOLD * average_ndvi:
         return "stressed"
     else:
         return "critical"
 
-# Load sample vegetation data from CSV
+# Load sample NDVI data
 data = pd.read_csv("../data/sample_vegetation.csv")
 
-# Classify the crop health status
+# Classify crop health
 status = get_crop_status(data["ndvi"])
 
-# Display the result
 print("Crop status:", status)
